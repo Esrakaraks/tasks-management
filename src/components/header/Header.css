@@ -1,0 +1,8 @@
+.headerRight {
+    display: flex;
+    align-items: center;
+}
+.headerRight-login {
+    color: white;
+    font-size: 20px;
+}
