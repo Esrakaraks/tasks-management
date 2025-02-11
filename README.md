@@ -1,14 +1,14 @@
 # Task Management System
 
-## 📌 Overview
+## Overview
 
 This project is built with **React, Redux, React Query, Material UI** for the frontend and **Express.js (File-based JSON storage)** for the backend.  
 
-✅ **Frontend and Backend work on a single URL using a proxy** so that the application runs seamlessly.
+**Frontend and Backend work on a single URL using a proxy** so that the application runs seamlessly.
 
 ---
 
-## 🚀 Features
+## Features
 - **User Authentication:** Users log in with **TCKimlik No** verification.
 - **Role-Based Access:**  
   - **Admin** can **view, edit, delete, and assign** tasks to users.
@@ -20,10 +20,9 @@ This project is built with **React, Redux, React Query, Material UI** for the fr
 
 ---
 
-## 🏗️ Installation & Running the Project
+## Installation & Running the Project
 
-```sh
-git clone https://github.com/your-repo/task-management.git
-cd task-management
+git clone https://github.com/Esrakaraks/team-tasks.git
 npm install
 npm run dev
+http://localhost:3000
