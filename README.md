@@ -22,7 +22,7 @@ This project is built with **React, Redux, React Query, Material UI** for the fr
 
 ## Installation & Running the Project
 
-git clone https://github.com/Esrakaraks/team-tasks.git
-npm install
-npm run dev
-http://localhost:3000
+- **git clone https://github.com/Esrakaraks/team-tasks.git**
+- **npm install**
+- **npm run dev**
+- **http://localhost:3000**
