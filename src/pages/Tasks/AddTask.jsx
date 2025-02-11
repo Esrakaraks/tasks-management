@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, MenuItem, Select, InputLabel, FormControl, Box } from "@mui/material";
 import { addTask } from "../../api/TasksApi";
 import { useSelector } from "react-redux";
@@ -44,7 +44,7 @@ const AddTaskModal = ({users}) => {
 
   return (
     <>
-      <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
+      <Button className="addTask-button" variant="contained" color="primary" onClick={() => setOpen(true)}>
       Add New Task
       </Button>
 
@@ -68,7 +68,7 @@ const AddTaskModal = ({users}) => {
               fullWidth
               margin="normal"
             />
-            {user.role === "admin" && (
+            {user?.role === "admin" && users?.length > 0 && (
               <FormControl fullWidth margin="normal">
                 <InputLabel>Select user</InputLabel>
                 <Select
@@ -77,8 +77,7 @@ const AddTaskModal = ({users}) => {
                   onChange={handleChange}
                 >
                   {
-                    users
-                      .filter((u) => u.role === "user")
+                    users.filter((u) => u.role === "user")
                       .map((u) => (
                         <MenuItem key={u.id} value={u.id}>
                           {u.name}
@@ -91,7 +90,7 @@ const AddTaskModal = ({users}) => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(false)} color="secondary">
+          <Button onClick={() => setOpen(false)} color="error">
             Cancel
           </Button>
           <Button onClick={handleSubmit} variant="contained" color="primary">

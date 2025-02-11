@@ -54,19 +54,28 @@ router.post("/", (req, res) => {
 });
 
 router.put("/update/:id", (req, res) => {
-    const { id } = req.params;
-    const { title, description, status } = req.body;
-    let tasks = loadTasks();
-  
-    const taskIndex = tasks.findIndex((task) => task.id === id);
-    if (taskIndex === -1) {
-      return res.status(404).json({ message: "Task not found." });
-    }
-  
-    tasks[taskIndex] = { ...tasks[taskIndex], title, description, status };
-    saveTasks(tasks);
-    res.json(tasks[taskIndex]);
-  });
+  const { id } = req.params;
+  const { title, description, status, userId } = req.body;
+
+  let tasks = loadTasks();
+  const taskIndex = tasks.findIndex((task) => task.id === id);
+
+  if (taskIndex === -1) {
+    return res.status(404).json({ message: "Task not found." });
+  }
+
+  tasks[taskIndex] = { 
+    ...tasks[taskIndex], 
+    title, 
+    description, 
+    status, 
+    userId
+  };
+
+  saveTasks(tasks);
+  res.json(tasks[taskIndex]);
+});
+
 
 router.delete("/delete/:id", (req, res) => {
   const { id } = req.params;

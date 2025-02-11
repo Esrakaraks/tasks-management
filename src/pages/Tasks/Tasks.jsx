@@ -3,7 +3,7 @@ import { useMutation, useQuery,useQueryClient } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import { deleteTask, fetchTasks } from "../../api/TasksApi";
 import { fetchUsers } from "../../api/AuthApi";
-import { List, ListItem, ListItemText, Checkbox, Typography, CircularProgress, Box, IconButton } from "@mui/material";
+import { List, ListItem, ListItemText, Checkbox, Box, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import AddTaskModal from "./AddTask";
@@ -35,8 +35,8 @@ const Tasks = () => {
 
 
   return (
-    <Box sx={{ maxWidth: 600, mx: "auto", mt: 4 }}>
-      <AddTaskModal users ={users} />
+    <Box className='Tasks-container'>
+      {<AddTaskModal users={users } />}
       <List>
         {tasks?.map(task => (
           <ListItem key={task.id} divider>
@@ -51,7 +51,7 @@ const Tasks = () => {
             {(user.role === "admin" || user.id === task.userId) && (
               <IconButton onClick={() => setSelectedTask(task)} color="primary">
                 <EditIcon />
-                {selectedTask && <EditTask open={!!selectedTask} handleClose={() => setSelectedTask(null)} task={selectedTask} users ={users} />}
+                {selectedTask && <EditTask open={!!selectedTask} handleClose={() => setSelectedTask(null)} task={selectedTask} users={users} />}
               </IconButton>
             )}
             {(user.role === "admin" || user.id === task.userId) && (

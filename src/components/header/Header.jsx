@@ -29,7 +29,7 @@ function Header() {
             Task Management
           </Typography>
           <Box className="headerRight" >
-            {user && (<IconButton className="headerRight-login" onClick={handleLogout} >               
+            {user?.name && (<IconButton className="headerRight-login" onClick={handleLogout} >               
                 <Typography variant="h8" component="div" sx={{ flexGrow: 1 }}>
                     {user.name}
                 </Typography>

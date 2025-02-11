@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [tc,setTc] = useState(null);
+    const [tc,setTc] = useState("");
     const mutation = useMutation({      
         mutationFn: () => loginUser(tc),
         onSuccess: (data) => {
@@ -35,7 +35,7 @@ const Login = () => {
           variant="outlined"
           fullWidth
           margin="normal"
-          value={tc}
+          value={tc || ""}
           onChange={(e) => setTc(e.target.value)}
           inputProps={{ maxLength: 11 }}
           required
