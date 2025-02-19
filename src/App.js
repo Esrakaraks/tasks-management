@@ -5,9 +5,10 @@ import "./App.css";
 import Header from './components/header/Header';
 import Login from './pages/Login/Login';
 import Tasks from './pages/Tasks/Tasks';
+import Register from './pages/Register/Register';
 
 function App() {
-  const user = useSelector(state => state.user.user);
+  const token = useSelector(state => state.user.token);
 
   return (
     <div className='App'>
@@ -15,9 +16,10 @@ function App() {
         <Router>
           <Header />
           <Routes>
-            <Route path="/" element={user ? <Navigate to="/tasks" /> : <Navigate to="/login" />} />
+            <Route path="/" element={token ? <Navigate to="/tasks" /> : <Navigate to="/register" />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/tasks" element={user ? <Tasks /> : <Navigate to="/login" />} />
+            <Route path="/tasks" element={token ? <Tasks /> : <Navigate to="/register" />} />
           </Routes>
         </Router>
       </StyledEngineProvider>

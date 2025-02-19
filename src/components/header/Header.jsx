@@ -14,11 +14,10 @@ function Header() {
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const user = useSelector((state) => state.user.user);
-
-
+   
     const handleLogout = () => {
         dispatch(logout())
-        navigate("/login");
+        navigate("/register");
     }
 
   return (

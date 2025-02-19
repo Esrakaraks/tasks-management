@@ -14,6 +14,7 @@ import {
   Select,
   InputLabel,
   FormControl,
+  Typography,
 } from "@mui/material";
 import { updateTask } from "../../api/TasksApi";
 import { useSelector } from "react-redux";
@@ -22,10 +23,16 @@ const EditTask = ({ open, handleClose, task, users }) => {
   const user = useSelector((state) => state.user.user);
   const [editData, setEditData] = useState({
     id: task?.id,
-    title: task?.title,
-    description: task?.description,
-    status: task?.status,
-    userId: task?.userId,
+    title: task?.title || "",
+    description: task?.description || "",
+    status: task?.status || "InComplete",
+    userId: task?.userId || "",
+  });
+
+  const [errors, setErrors] = useState({
+    title: false,
+    description: false,
+    userId: false,
   });
 
   const queryClient = useQueryClient();
@@ -41,6 +48,8 @@ const EditTask = ({ open, handleClose, task, users }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditData((prev) => ({ ...prev, [name]: value }));
+
+    setErrors((prev) => ({ ...prev, [name]: false }));
   };
 
   const handleStatusChange = () => {
@@ -52,9 +61,19 @@ const EditTask = ({ open, handleClose, task, users }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let newErrors = {};
+    if (!editData.title.trim()) newErrors.title = true;
+    if (!editData.description.trim()) newErrors.description = true;
+    if (user?.role === "admin" && !editData.userId) newErrors.userId = true;
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     mutation.mutate({
       taskId: editData.id,
-      updatedData: { ...editData, role: user.role },
+      updatedData: { ...editData, role: user?.role },
     });
   };
 
@@ -66,7 +85,7 @@ const EditTask = ({ open, handleClose, task, users }) => {
           <FormControlLabel
             control={
               <Checkbox
-                checked={editData.status === "Completed"}
+                checked={editData?.status === "Completed"}
                 onChange={handleStatusChange}
                 color="primary"
               />
@@ -81,6 +100,9 @@ const EditTask = ({ open, handleClose, task, users }) => {
             onChange={handleChange}
             fullWidth
             margin="normal"
+            required
+            error={errors.title}
+            helperText={errors.title ? "Title is required!" : ""}
           />
 
           <TextField
@@ -90,14 +112,17 @@ const EditTask = ({ open, handleClose, task, users }) => {
             onChange={handleChange}
             fullWidth
             margin="normal"
+            required
+            error={errors.description}
+            helperText={errors.description ? "Description is required!" : ""}
           />
 
-          {user?.role === "admin" &&  users?.length > 0 && (
-            <FormControl fullWidth margin="normal">
+          {user?.role === "admin" && users?.length > 0 && (
+            <FormControl fullWidth margin="normal" error={errors.userId}>
               <InputLabel>Select user</InputLabel>
               <Select
                 name="userId"
-                value={editData.userId}
+                value={editData?.userId}
                 onChange={handleChange}
               >
                 {users
@@ -108,6 +133,9 @@ const EditTask = ({ open, handleClose, task, users }) => {
                     </MenuItem>
                   ))}
               </Select>
+              {errors.userId && (
+                <Typography color="error">Admin must select a user!</Typography>
+              )}
             </FormControl>
           )}
         </Box>
